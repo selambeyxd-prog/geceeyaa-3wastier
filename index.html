@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun Sevgilim</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            overflow: hidden; /* Kaydırma çubuklarını gizle */
+            /* Premium hareketli arka plan */
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #111827);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        /* Cam efekti (Glassmorphism) kutusu */
+        .page {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            
+            /* Geçiş animasyonları */
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s ease-in-out;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #e0e7ff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
+            outline: none;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Ufak kalp animasyonu */
+        .heart {
+            color: #f43f5e;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="senin_muzigin.mp3" type="audio/mpeg">
+        Tarayıcınız ses öğesini desteklemiyor.
+    </audio>
+
+    <div class="container">
+        <div class="page active" id="page1">
+            <h1>Bugün Çok Özel Bir Gün...</h1>
+            <p>Hayatıma ışık katan, dünyamı güzelleştiren o muhteşem insanın doğduğu gün.</p>
+            <button class="btn" onclick="startJourney()">Senin İçin <span class="heart">❤️</span></button>
+        </div>
+
+        <div class="page" id="page2">
+            <h1>İyi Ki Benimlesin</h1>
+            <p>Seninle geçen her an, kalbime yazılan en güzel hikaye. Gülüşünle aydınlanan günlerim, varlığınla bulduğum huzur her şeye bedel.</p>
+            <button class="btn" onclick="nextPage(2, 3)">Devam Et</button>
+        </div>
+
+        <div class="page" id="page3">
+            <h1>Geleceğimize...</h1>
+            <p>Gözlerine baktığımda sadece bugünü değil, el ele yürüyeceğimiz o güzel yarınları görüyorum. Birlikte kuracağımız daha nice güzel hayallere ve anılara...</p>
+            <button class="btn" onclick="nextPage(3, 4)">Devam Et</button>
+        </div>
+
+        <div class="page" id="page4">
+            <h1>Doğum Günün Kutlu Olsun</h1>
+            <p>Seni dünden daha çok, yarından daha az seviyorum. İyi ki doğdun sevgilim, iyi ki benim dünyamsın. <span class="heart">❤️</span></p>
+            <button class="btn" style="margin-top: 15px;" onclick="resetJourney()">Başa Dön</button>
+        </div>
+    </div>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+
+        // İlk sayfa geçişi ve müziği başlatma fonksiyonu
+        function startJourney() {
+            // Müziği oynat
+            bgMusic.play();
+            // Sayfa 1'den 2'ye geç
+            nextPage(1, 2);
+        }
+
+        // Sayfalar arası geçiş fonksiyonu
+        function nextPage(currentId, nextId) {
+            document.getElementById('page' + currentId).classList.remove('active');
+            document.getElementById('page' + nextId).classList.add('active');
+        }
+
+        // İsteğe bağlı: En başa dönme fonksiyonu (Müzik çalmaya devam eder)
+        function resetJourney() {
+            document.getElementById('page4').classList.remove('active');
+            document.getElementById('page1').classList.add('active');
+        }
+    </script>
+</body>
+</html>
