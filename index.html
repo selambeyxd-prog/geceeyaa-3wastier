@@ -3,148 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İyi ki Doğdun Sevgilim</title>
+    <title>Sadece Senin İçin...</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
             color: #ffffff;
             overflow: hidden;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            background: radial-gradient(circle at center, #121212 0%, #000000 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Premium Hareketli Arka Plan Işıkları */
         .bg-glow {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(45, 45, 45, 0.3), transparent 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(60, 60, 60, 0.2), transparent 70%);
             z-index: -1;
-            animation: moveGlow 10s infinite alternate;
+            animation: moveGlow 8s infinite alternate;
         }
 
         @keyframes moveGlow {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.2) translate(5%, 5%); }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.3); }
         }
 
-        .container {
-            width: 90%;
-            max-width: 550px;
-            perspective: 1000px;
-        }
+        .container { width: 90%; max-width: 550px; position: relative; }
 
         .page {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 50px 40px;
             border-radius: 30px;
             text-align: center;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
-            display: none; /* Sayfalar başlangıçta gizli */
-            animation: fadeInScale 0.8s ease-out forwards;
+            display: none;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+            animation: slideIn 0.8s ease-out forwards;
         }
 
-        .page.active {
-            display: block;
-        }
+        .page.active { display: block; }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, #888);
+            background: linear-gradient(to right, #ffffff, #a1a1a1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 35px;
-            color: #ccc;
-            font-weight: 300;
-        }
+        p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 30px; color: #d1d1d1; font-weight: 300; }
 
         .btn {
             background: transparent;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 15px 40px;
-            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 35px;
+            font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: all 0.3s;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        .btn:hover {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-        }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
 
-        .heart {
-            color: #ff4d4d;
-            display: inline-block;
-            animation: heartBeat 1.2s infinite;
-        }
+        /* Final Sayfası Butonları */
+        .choice-btns { display: flex; justify-content: center; gap: 20px; margin-top: 20px; position: relative; }
+        
+        #noBtn { position: relative; transition: all 0.2s ease; }
+        
+        #yesBtn { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
 
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
+        .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
     </style>
 </head>
 <body>
 
     <div class="bg-glow"></div>
-
-    <audio id="music" loop>
-        <source src="senin_muzigin.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="music" loop><source src="senin_muzigin.mp3" type="audio/mpeg"></audio>
 
     <div class="container">
         <div class="page active" id="p1">
             <h1>Sadece Senin İçin...</h1>
-            <p>Hayatıma girdiğin o günden beri dünyam daha aydınlık. Bugün, senin günün ve senin için küçük bir sürpriz hazırladım.</p>
-            <button class="btn" onclick="startApp()">Hazır mısın? <span class="heart">❤️</span></button>
+            <p>Bugün takvimdeki en güzel gün. Hayatıma kattığın tüm renkler için sana küçük bir sürpriz hazırlamak istedim.</p>
+            <button class="btn" onclick="startApp()">Başlayalım mı? <span class="heart">❤️</span></button>
         </div>
 
         <div class="page" id="p2">
             <h1>İyi ki Doğdun</h1>
-            <p>Seninle geçen her saniye benim için bir hazine. Gülüşün, sesin, varlığın... Her şeyinle hayatımın en güzel parçasısın.</p>
+            <p>Geçmişte bazı hatalarım oldu, biliyorum. Seni kırdığım her anın ağırlığını kalbimde taşıyorum. Ama bugün, sadece senin mutluluğunu ve güzelliğini konuşalım istiyorum.</p>
             <button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button>
         </div>
 
         <div class="page" id="p3">
-            <h1>Yeni Yaşında...</h1>
-            <p>Dilerim bu yeni yaşın sana kalbin kadar güzel şeyler getirir. Seninle daha nice yıllara, el ele ve aşkla yürümek tek dileğim.</p>
-            <button class="btn" onclick="nextPage('p3', 'p4')">Sana Bir Sözüm Var</button>
+            <h1>Yeni Bir Başlangıç</h1>
+            <p>Bu yeni yaşın, tüm kırgınlıkları geride bıraktığımız, birbirimizi daha iyi anladığımız bir dönemin başlangıcı olsun. Ben seninle daha iyi bir adam olmayı öğrendim.</p>
+            <button class="btn" onclick="nextPage('p3', 'p4')">Sana Sormak İstediğim Bir Şey Var...</button>
         </div>
 
         <div class="page" id="p4">
-            <h1>Sonsuzluğa...</h1>
-            <p>Seni dünden çok, yarından az seviyorum. Her zaman yanında, her zaman seninle olacağım. Mutlu yıllar sevgilim!</p>
-            <button class="btn" onclick="location.reload()">Başa Dön</button>
+            <h1>Son Bir Soru...</h1>
+            <p>Hatalarımdan ders çıkardım ve seni kaybetmek istemiyorum. Geçmişi geride bırakıp, bu güzel günde benimle yepyeni bir yola çıkmaya, <b>sevgilim</b> olmaya var mısın?</p>
+            <div class="choice-btns">
+                <button class="btn" id="yesBtn" onclick="celebrate()">EVET ❤️</button>
+                <button class="btn" id="noBtn" onmouseover="moveButton()">HAYIR</button>
+            </div>
+        </div>
+
+        <div class="page" id="p5">
+            <h1>Seni Çok Seviyorum!</h1>
+            <p>Bu aldığım en güzel doğum günü hediyesi oldu. Söz veriyorum, her gününü bu sayfadaki kadar özel hissettireceğim. İyi ki varsın dünyam! <span class="heart">❤️</span></p>
         </div>
     </div>
 
@@ -152,18 +135,25 @@
         const music = document.getElementById('music');
 
         function startApp() {
-            music.play().catch(() => console.log("Müzik için etkileşim gerekiyor."));
+            music.play().catch(() => {});
             nextPage('p1', 'p2');
         }
 
         function nextPage(current, next) {
-            document.getElementById(current).style.animation = "fadeInScale 0.5s ease-in reverse forwards";
-            setTimeout(() => {
-                document.getElementById(current).classList.remove('active');
-                const nextEl = document.getElementById(next);
-                nextEl.classList.add('active');
-                nextEl.style.animation = "fadeInScale 0.8s ease-out forwards";
-            }, 500);
+            document.getElementById(current).classList.remove('active');
+            document.getElementById(next).classList.add('active');
+        }
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth) - (window.innerWidth / 2 - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight) - (window.innerHeight / 2 - noBtn.offsetHeight);
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function celebrate() {
+            nextPage('p4', 'p5');
+            // Buraya istersen konfeti efekti ekleyebiliriz
         }
     </script>
 </body>
