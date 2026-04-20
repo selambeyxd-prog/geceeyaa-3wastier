@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İyi ki Doğdun Sevgilim</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
         * {
             margin: 0;
@@ -15,197 +15,155 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            color: #fff;
-            overflow: hidden; /* Kaydırma çubuklarını gizle */
-            /* Siyah/Koyu Gri premium hareketli arka plan */
-            background: linear-gradient(-45deg, #000000, #111111, #080808, #000000);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            color: #ffffff;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Premium Hareketli Arka Plan Işıkları */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(45, 45, 45, 0.3), transparent 70%);
+            z-index: -1;
+            animation: moveGlow 10s infinite alternate;
+        }
+
+        @keyframes moveGlow {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(5%, 5%); }
         }
 
         .container {
             width: 90%;
-            max-width: 600px;
-            position: relative;
+            max-width: 550px;
+            perspective: 1000px;
         }
 
-        /* Cam efekti (Glassmorphism) kutusu */
         .page {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03); /* Daha şeffaf, siyah fonda daha iyi durur */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 60px 50px;
-            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+            border-radius: 30px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            
-            /* Temel geçiş animasyonları */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            display: none; /* Sayfalar başlangıçta gizli */
+            animation: fadeInScale 0.8s ease-out forwards;
         }
 
         .page.active {
-            opacity: 1;
-            visibility: visible;
+            display: block;
         }
 
-        /* Yazıların yavaşça gelme animasyonu (Yeni Eklendi) */
-        .page.active h1,
-        .page.active p,
-        .page.active .btn {
-            animation: contentFadeInUp 1.2s ease forwards;
-            opacity: 0; /* Başlangıçta gizli */
-        }
-
-        /* Yazılar için gecikme süreleri (Her element farklı zamanda başlar) */
-        .page.active h1 { animation-delay: 0.2s; }
-        .page.active p { animation-delay: 0.6s; }
-        .page.active .btn { animation-delay: 1s; }
-
-        @keyframes contentFadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px); /* Aşağıdan başlar */
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0); /* Kendi yerine gelir */
-            }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
-            margin-bottom: 25px;
-            font-weight: 700;
-            color: #f8fafc;
-            text-shadow: 0 2px 15px rgba(255,255,255,0.1);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         p {
-            font-size: 1.15rem;
-            line-height: 1.9;
+            font-size: 1.1rem;
+            line-height: 1.8;
             margin-bottom: 35px;
-            color: #e2e8f0;
+            color: #ccc;
             font-weight: 300;
         }
 
         .btn {
-            background: rgba(255, 255, 255, 0.08);
+            background: transparent;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 14px 35px;
-            font-size: 1.05rem;
-            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 15px 40px;
+            font-size: 1rem;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            letter-spacing: 1px;
-            outline: none;
-            display: inline-block; /* Animasyon için önemli */
+            transition: all 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 20px rgba(255,255,255,0.15);
-            transform: translateY(-2px);
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
         }
 
-        /* Ufak kalp animasyonu */
         .heart {
-            color: #f43f5e;
-            animation: pulse 1.5s infinite;
+            color: #ff4d4d;
             display: inline-block;
-            margin-left: 5px;
+            animation: heartBeat 1.2s infinite;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
             50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
+    <div class="bg-glow"></div>
+
+    <audio id="music" loop>
         <source src="senin_muzigin.mp3" type="audio/mpeg">
-        Tarayıcınız ses öğesini desteklemiyor.
     </audio>
 
     <div class="container">
-        <div class="page active" id="page1">
-            <h1>Bugün Çok Özel Bir Gün...</h1>
-            <p>Hayatıma ışık katan, dünyamı güzelleştiren o muhteşem insanın doğduğu gün.</p>
-            <button class="btn" onclick="startJourney()">Senin İçin <span class="heart">❤️</span></button>
+        <div class="page active" id="p1">
+            <h1>Sadece Senin İçin...</h1>
+            <p>Hayatıma girdiğin o günden beri dünyam daha aydınlık. Bugün, senin günün ve senin için küçük bir sürpriz hazırladım.</p>
+            <button class="btn" onclick="startApp()">Hazır mısın? <span class="heart">❤️</span></button>
         </div>
 
-        <div class="page" id="page2">
-            <h1>İyi Ki Benimlesin</h1>
-            <p>Seninle geçen her an, kalbime yazılan en güzel hikaye. Gülüşünle aydınlanan günlerim, varlığınla bulduğum huzur her şeye bedel.</p>
-            <button class="btn" onclick="nextPage(2, 3)">Devam Et</button>
+        <div class="page" id="p2">
+            <h1>İyi ki Doğdun</h1>
+            <p>Seninle geçen her saniye benim için bir hazine. Gülüşün, sesin, varlığın... Her şeyinle hayatımın en güzel parçasısın.</p>
+            <button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button>
         </div>
 
-        <div class="page" id="page3">
-            <h1>Geleceğimize...</h1>
-            <p>Gözlerine baktığımda sadece bugünü değil, el ele yürüyeceğimiz o güzel yarınları görüyorum. Birlikte kuracağımız daha nice güzel hayallere ve anılara...</p>
-            <button class="btn" onclick="nextPage(3, 4)">Devam Et</button>
+        <div class="page" id="p3">
+            <h1>Yeni Yaşında...</h1>
+            <p>Dilerim bu yeni yaşın sana kalbin kadar güzel şeyler getirir. Seninle daha nice yıllara, el ele ve aşkla yürümek tek dileğim.</p>
+            <button class="btn" onclick="nextPage('p3', 'p4')">Sana Bir Sözüm Var</button>
         </div>
 
-        <div class="page" id="page4">
-            <h1>Doğum Günün Kutlu Olsun</h1>
-            <p>Seni dünden daha çok, yarından daha az seviyorum. İyi ki doğdun sevgilim, iyi ki benim dünyamsın. <span class="heart">❤️</span></p>
-            <button class="btn" style="margin-top: 15px;" onclick="resetJourney()">Başa Dön</button>
+        <div class="page" id="p4">
+            <h1>Sonsuzluğa...</h1>
+            <p>Seni dünden çok, yarından az seviyorum. Her zaman yanında, her zaman seninle olacağım. Mutlu yıllar sevgilim!</p>
+            <button class="btn" onclick="location.reload()">Başa Dön</button>
         </div>
     </div>
 
     <script>
-        const bgMusic = document.getElementById('bgMusic');
+        const music = document.getElementById('music');
 
-        // İlk sayfa geçişi ve müziği başlatma fonksiyonu
-        function startJourney() {
-            bgMusic.play().catch(error => {
-                // Tarayıcı müziği engellerse konsola yaz, ama geçişi yap
-                console.log("Müzik otomatik başlatılamadı:", error);
-            });
-            nextPage(1, 2);
+        function startApp() {
+            music.play().catch(() => console.log("Müzik için etkileşim gerekiyor."));
+            nextPage('p1', 'p2');
         }
 
-        // Sayfalar arası geçiş fonksiyonu
-        function nextPage(currentId, nextId) {
-            // Önceki sayfayı gizle
-            document.getElementById('page' + currentId).classList.remove('active');
-            
-            // Sonraki sayfayı göster (animasyon CSS ile tetiklenir)
+        function nextPage(current, next) {
+            document.getElementById(current).style.animation = "fadeInScale 0.5s ease-in reverse forwards";
             setTimeout(() => {
-                document.getElementById('page' + nextId).classList.add('active');
-            }, 100); // Küçük bir gecikme animasyonun daha pürüzsüz başlamasını sağlar
-        }
-
-        // En başa dönme fonksiyonu
-        function resetJourney() {
-            document.getElementById('page' + 4).classList.remove('active');
-            setTimeout(() => {
-                document.getElementById('page1').classList.add('active');
-            }, 100);
+                document.getElementById(current).classList.remove('active');
+                const nextEl = document.getElementById(next);
+                nextEl.classList.add('active');
+                nextEl.style.animation = "fadeInScale 0.8s ease-out forwards";
+            }, 500);
         }
     </script>
 </body>
