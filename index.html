@@ -13,7 +13,7 @@
             font-family: 'Poppins', sans-serif;
             color: #ffffff;
             overflow: hidden;
-            background: radial-gradient(circle at center, #121212 0%, #000000 100%);
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,14 +23,14 @@
         .bg-glow {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(60, 60, 60, 0.2), transparent 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(50, 50, 50, 0.25), transparent 70%);
             z-index: -1;
-            animation: moveGlow 8s infinite alternate;
+            animation: moveGlow 12s infinite alternate;
         }
 
         @keyframes moveGlow {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.3); }
+            0% { transform: scale(1) translate(0,0); }
+            100% { transform: scale(1.4) translate(2%, 2%); }
         }
 
         .container { width: 90%; max-width: 550px; position: relative; }
@@ -39,57 +39,59 @@
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 50px 40px;
-            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 55px 45px;
+            border-radius: 35px;
             text-align: center;
             display: none;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
-            animation: slideIn 0.8s ease-out forwards;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 1);
+            animation: slideIn 0.9s ease-out forwards;
         }
 
         .page.active { display: block; }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #ffffff, #a1a1a1);
+            font-size: 2.3rem;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #ffffff, #999);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 30px; color: #d1d1d1; font-weight: 300; }
+        p { font-size: 1.1rem; line-height: 1.9; margin-bottom: 35px; color: #dcdcdc; font-weight: 300; }
 
         .btn {
             background: transparent;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 15px 35px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 16px 38px;
             font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 1.5px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .btn:hover { 
+            background: #fff; 
+            color: #000; 
+            box-shadow: 0 0 25px rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
 
-        /* Final Sayfası Butonları */
-        .choice-btns { display: flex; justify-content: center; gap: 20px; margin-top: 20px; position: relative; }
-        
-        #noBtn { position: relative; transition: all 0.2s ease; }
-        
-        #yesBtn { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+        .choice-btns { display: flex; justify-content: center; gap: 20px; margin-top: 25px; position: relative; }
+        #noBtn { position: relative; transition: all 0.2s ease; z-index: 10; }
+        #yesBtn { background: rgba(255, 255, 255, 0.08); border-color: #fff; }
 
-        .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; margin: 0 5px; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
     </style>
 </head>
 <body>
@@ -100,34 +102,40 @@
     <div class="container">
         <div class="page active" id="p1">
             <h1>Sadece Senin İçin...</h1>
-            <p>Bugün takvimdeki en güzel gün. Hayatıma kattığın tüm renkler için sana küçük bir sürpriz hazırlamak istedim.</p>
-            <button class="btn" onclick="startApp()">Başlayalım mı? <span class="heart">❤️</span></button>
+            <p>Hayat bazen bize beklenmedik yollar çizer. Benim yolumun seninkine rastladığı o an, hayatımın en değerli dönüm noktasıydı.</p>
+            <button class="btn" onclick="startApp()">Biraz Dinler misin? <span class="heart">❤️</span></button>
         </div>
 
         <div class="page" id="p2">
-            <h1>İyi ki Doğdun</h1>
-            <p>Geçmişte bazı hatalarım oldu, biliyorum. Seni kırdığım her anın ağırlığını kalbimde taşıyorum. Ama bugün, sadece senin mutluluğunu ve güzelliğini konuşalım istiyorum.</p>
+            <h1>Kalbimdeki Yerin</h1>
+            <p>Biliyorum, her şey her zaman kusursuz değildi. Hatalarım oldu, seni kırdığım zamanlar oldu... Ama sensiz geçen her saniye, aslında senin benim için ne kadar vazgeçilmez olduğunu bana tekrar tekrar öğretti.</p>
             <button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button>
         </div>
 
         <div class="page" id="p3">
-            <h1>Yeni Bir Başlangıç</h1>
-            <p>Bu yeni yaşın, tüm kırgınlıkları geride bıraktığımız, birbirimizi daha iyi anladığımız bir dönemin başlangıcı olsun. Ben seninle daha iyi bir adam olmayı öğrendim.</p>
-            <button class="btn" onclick="nextPage('p3', 'p4')">Sana Sormak İstediğim Bir Şey Var...</button>
+            <h1>İyi ki Doğdun</h1>
+            <p>Bugün sadece senin doğduğun gün değil, benim dünyamın güzelleştiği gün. Tüm o hataları telafi etmek, sana hak ettiğin o huzuru ve sevgiyi her gün yeniden hissettirmek istiyorum.</p>
+            <button class="btn" onclick="nextPage('p3', 'p4')">Yarına Dair...</button>
         </div>
 
         <div class="page" id="p4">
+            <h1>Yeni Bir Başlangıç</h1>
+            <p>Bu yeni yaşın, bizim için tüm bulutların dağıldığı ve güneşin yeniden açtığı bir yıl olsun. Elini tuttuğum her an, kendimi dünyanın en şanslı adamı gibi hissediyorum.</p>
+            <button class="btn" onclick="nextPage('p4', 'p5')">Sana Sormam Gereken Bir Şey Var...</button>
+        </div>
+
+        <div class="page" id="p5">
             <h1>Son Bir Soru...</h1>
-            <p>Hatalarımdan ders çıkardım ve seni kaybetmek istemiyorum. Geçmişi geride bırakıp, bu güzel günde benimle yepyeni bir yola çıkmaya, <b>sevgilim</b> olmaya var mısın?</p>
+            <p>Geçmişi bir kenara bırakıp, bu güzel günde her şeye yeniden ve çok daha güçlü bir şekilde başlamaya, benimle bu yolda <b>sevgilim</b> olarak yürümeye var mısın?</p>
             <div class="choice-btns">
                 <button class="btn" id="yesBtn" onclick="celebrate()">EVET ❤️</button>
                 <button class="btn" id="noBtn" onmouseover="moveButton()">HAYIR</button>
             </div>
         </div>
 
-        <div class="page" id="p5">
+        <div class="page" id="p6">
             <h1>Seni Çok Seviyorum!</h1>
-            <p>Bu aldığım en güzel doğum günü hediyesi oldu. Söz veriyorum, her gününü bu sayfadaki kadar özel hissettireceğim. İyi ki varsın dünyam! <span class="heart">❤️</span></p>
+            <p>Bu aldığım en güzel hediye... Söz veriyorum, her gününü bu sayfadaki kadar özel ve huzurlu hissettireceğim. İyi ki varsın dünyam! <span class="heart">❤️</span></p>
         </div>
     </div>
 
@@ -146,14 +154,14 @@
 
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
+            // Butonu ekranın sınırları içinde rastgele bir yere fırlatır
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth) - (window.innerWidth / 2 - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight) - (window.innerHeight / 2 - noBtn.offsetHeight);
             noBtn.style.transform = `translate(${x}px, ${y}px)`;
         }
 
         function celebrate() {
-            nextPage('p4', 'p5');
-            // Buraya istersen konfeti efekti ekleyebiliriz
+            nextPage('p5', 'p6');
         }
     </script>
 </body>
