@@ -33,7 +33,7 @@
             100% { transform: scale(1.3); opacity: 1; }
         }
 
-        .container { width: 90%; max-width: 550px; position: relative; z-index: 10; }
+        .container { width: 90%; max-width: 550px; position: relative; }
 
         .page {
             background: rgba(255, 255, 255, 0.02);
@@ -65,6 +65,7 @@
             background: linear-gradient(to right, #fff, #888);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: fadeInText 1.5s ease forwards;
         }
 
         p { 
@@ -73,6 +74,12 @@
             margin-bottom: 35px; 
             color: #d0d0d0; 
             font-weight: 300; 
+            animation: fadeInText 2s ease forwards;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .btn {
@@ -86,18 +93,30 @@
             transition: all 0.4s;
             letter-spacing: 2px;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 
-        .choice-btns { display: flex; justify-content: center; gap: 20px; margin-top: 25px; }
+        .choice-btns { 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            margin-top: 25px;
+            min-height: 60px; 
+        }
         
-        #noBtn { transition: all 0.3s ease; z-index: 1000; }
+        #noBtn { 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            z-index: 1000;
+        }
+
         #yesBtn { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+
         .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
 
-        /* --- 🎉 KONFETİ VE PARTİ EFEKTLERİ --- */
+        /* --- 🎉 YENİ EKLENEN PARTİ EFEKTİ STİLLERİ --- */
         .popper-container {
             position: fixed;
             top: 50%;
@@ -106,9 +125,7 @@
             opacity: 0;
             z-index: 5;
             pointer-events: none;
-            display: none; /* Sadece p4'te açılacak */
         }
-
         .popper-left { left: 5%; }
         .popper-right { right: 5%; transform: translateY(-50%) scaleX(-1); }
 
@@ -116,29 +133,21 @@
             0% { opacity: 0; transform: translateY(-50%) scale(0.5); }
             100% { opacity: 1; transform: translateY(-50%) scale(1); }
         }
-
         @keyframes popShake {
             0%, 100% { transform: translateY(-50%) scale(1); }
-            50% { transform: translateY(-50%) scale(1.2) rotate(10deg); }
+            50% { transform: translateY(-50%) scale(1.1) rotate(5deg); }
         }
 
-        .popper-visible {
-            display: block;
-            animation: fadeInPopper 1.5s ease-out forwards;
-        }
-
-        .popper-exploded {
-            animation: popShake 0.3s ease-in-out;
-        }
+        .popper-visible { animation: fadeInPopper 1.5s ease-out forwards; }
+        .popper-exploded { animation: popShake 0.3s ease-in-out; }
 
         .confetti {
             position: fixed;
             width: 10px;
             height: 10px;
-            z-index: 2;
+            z-index: 1;
             pointer-events: none;
         }
-
         @keyframes confettiFall {
             0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
             100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--dr)); }
@@ -192,7 +201,7 @@
 
         <div class="page" id="p7">
             <h1>Her Şeye Var mısın?</h1>
-            <p>Geçmişi burada bırakıp, bu güzel günde her şeye yeniden ve sonsuza dek benimle sevgilim olarak devam etmeye var mısın?</p>
+            <p>Geçmişi burada bırakıp, bu güzel günde her şeye yeniden ve sonsuza dek benimle <b>sevgilim</b> olarak devam etmeye var mısın?</p>
             <div class="choice-btns">
                 <button class="btn" id="yesBtn" onclick="celebrate()">EVET ❤️</button>
                 <button class="btn" id="noBtn" onmouseover="moveButton()">HAYIR</button>
@@ -220,64 +229,77 @@
             setTimeout(() => {
                 currentPg.classList.remove('active');
                 nextPg.classList.add('active');
-                
-                // --- EFEKT KONTROLÜ ---
+                window.scrollTo(0,0);
+
+                // EĞER SONRAKİ SAYFA p4 İSE (DOĞUM GÜNÜ SAYFASI)
                 if (next === 'p4') {
-                    triggerCelebration();
-                } else {
-                    document.getElementById('popperLeft').classList.remove('popper-visible');
-                    document.getElementById('popperRight').classList.remove('popper-visible');
+                    startPopperEffect();
                 }
             }, 400);
         }
 
-        function triggerCelebration() {
+        function startPopperEffect() {
             const pLeft = document.getElementById('popperLeft');
             const pRight = document.getElementById('popperRight');
 
-            // 1. Yavaşça beliriş
-            pLeft.classList.add('popper-visible');
-            pRight.classList.add('popper-visible');
+            // Yarım saniye sonra yavaşça belirmeye başla
+            setTimeout(() => {
+                pLeft.classList.add('popper-visible');
+                pRight.classList.add('popper-visible');
+            }, 500);
 
-            // 2. Patlama ve konfeti (1.5 saniye sonra)
+            // Belirdikten sonra (1.5s fade + bekleme) patlat
             setTimeout(() => {
                 pLeft.classList.add('popper-exploded');
                 pRight.classList.add('popper-exploded');
                 createConfetti(pLeft, 'left');
                 createConfetti(pRight, 'right');
-            }, 1500);
+            }, 2500);
         }
 
-        function createConfetti(el, side) {
-            const colors = ['#ffcc00', '#ff3366', '#33ccff', '#66ff66'];
-            const rect = el.getBoundingClientRect();
+        function createConfetti(popperElement, side) {
+            const colors = ['#ffcc00', '#ff3366', '#33ccff', '#66ff66', '#ff9933'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 8 + 4 + 'px';
+                confetti.style.width = size;
+                confetti.style.height = size;
+                if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
 
-            for (let i = 0; i < 40; i++) {
-                const c = document.createElement('div');
-                c.className = 'confetti';
-                c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                c.style.left = (rect.left + rect.width / 2) + 'px';
-                c.style.top = (rect.top + rect.height / 2) + 'px';
-                
-                const dx = (side === 'left' ? 1 : -1) * (Math.random() * 400 + 100) + 'px';
-                const dy = (Math.random() * 600 - 300) + 'px';
-                const dr = (Math.random() * 720) + 'deg';
+                const rect = popperElement.getBoundingClientRect();
+                confetti.style.left = (rect.left + rect.width / 2) + 'px';
+                confetti.style.top = (rect.top + rect.height / 2) + 'px';
 
-                c.style.setProperty('--dx', dx);
-                c.style.setProperty('--dy', dy);
-                c.style.setProperty('--dr', dr);
-                c.style.animation = `confettiFall ${Math.random() * 2 + 1}s ease-out forwards`;
-                
-                document.body.appendChild(c);
-                setTimeout(() => c.remove(), 3000);
+                let dx = (side === 'left' ? (Math.random() * 300 + 100) : (Math.random() * -300 - 100)) + 'px';
+                let dy = (Math.random() * 400 - 200) + 'px';
+                let dr = (Math.random() * 720 - 360) + 'deg';
+
+                confetti.style.setProperty('--dx', dx);
+                confetti.style.setProperty('--dy', dy);
+                confetti.style.setProperty('--dr', dr);
+
+                const duration = Math.random() * 1 + 1 + 's';
+                confetti.style.animation = `confettiFall ${duration} ease-out forwards`;
+
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
             }
         }
 
         function moveButton() {
-            const btn = document.getElementById('noBtn');
-            btn.style.position = 'fixed';
-            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            const noBtn = document.getElementById('noBtn');
+            if (noBtn.style.position !== 'fixed') {
+                noBtn.style.position = 'fixed';
+            }
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         }
 
         function celebrate() {
