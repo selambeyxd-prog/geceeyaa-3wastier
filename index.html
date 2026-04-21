@@ -33,7 +33,7 @@
             100% { transform: scale(1.3); opacity: 1; }
         }
 
-        .container { width: 90%; max-width: 550px; position: relative; z-index: 10; }
+        .container { width: 90%; max-width: 550px; position: relative; }
 
         .page {
             background: rgba(255, 255, 255, 0.02);
@@ -77,24 +77,18 @@
             font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: background 0.4s, color 0.4s;
+            transition: all 0.4s;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 
-        .choice-btns { 
-            display: flex; 
-            justify-content: center; 
-            gap: 20px; 
-            margin-top: 25px;
-            min-height: 60px;
-        }
+        .choice-btns { display: flex; justify-content: center; gap: 20px; margin-top: 25px; }
         
         #noBtn { 
             z-index: 1000;
-            transition: left 0.3s ease, top 0.3s ease;
+            transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         #yesBtn { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
@@ -109,16 +103,45 @@
     <audio id="music" loop><source src="senin_muzigin.mp3" type="audio/mpeg"></audio>
 
     <div class="container">
-        <div class="page active" id="p1"><h1>Sadece Senin İçin...</h1><p>Hayat seninle güzel...</p><button class="btn" onclick="startApp()">Başla ❤️</button></div>
-        <div class="page" id="p2"><h1>Işığınla Tanıştığım Gün</h1><p>Sen her şeysin.</p><button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button></div>
-        <div class="page" id="p3"><h1>Güzelliğin Hakkında</h1><p>Eşsizsin...</p><button class="btn" onclick="nextPage('p3', 'p4')">Devam Et</button></div>
-        <div class="page" id="p4"><h1>İyi ki Doğdun!</h1><p>Nice senelere sevgilim.</p><button class="btn" onclick="nextPage('p4', 'p5')">Devam Et</button></div>
-        <div class="page" id="p5"><h1>Yeniden Başlamak</h1><p>Özür dilerim...</p><button class="btn" onclick="nextPage('p5', 'p6')">Devam Et</button></div>
-        <div class="page" id="p6"><h1>Geleceğe Dair</h1><p>Seni çok seviyorum.</p><button class="btn" onclick="nextPage('p6', 'p7')">Soruma Gel...</button></div>
+        <div class="page active" id="p1">
+            <h1>Sadece Senin İçin...</h1>
+            <p>Hayat bazen sessiz bir melodi gibidir, ta ki o melodiyi güzelleştiren asıl nota gelene kadar.</p>
+            <button class="btn" onclick="startApp()">Başla ❤️</button>
+        </div>
+
+        <div class="page" id="p2">
+            <h1>Güneşin Doğuşu</h1>
+            <p>Senin varlığın, tüm karanlıkları unutturacak kadar güçlü.</p>
+            <button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button>
+        </div>
+
+        <div class="page" id="p3">
+            <h1>Ruhun Eşsizliği</h1>
+            <p>Sadece yüzün değil, kalbin ve ruhun da o kadar eşsiz ki...</p>
+            <button class="btn" onclick="nextPage('p3', 'p4')">Devam Et</button>
+        </div>
+
+        <div class="page" id="p4">
+            <h1>İyi ki Doğdun!</h1>
+            <p>Dilerim bu yeni yaşın sana kalbinin dilediği her şeyi getirir.</p>
+            <button class="btn" onclick="nextPage('p4', 'p5')">Devam Et</button>
+        </div>
+
+        <div class="page" id="p5">
+            <h1>Özür Dilerim</h1>
+            <p>Seni kırdım, biliyorum. Sensiz geçen her an değerini bana tekrar öğretti.</p>
+            <button class="btn" onclick="nextPage('p5', 'p6')">Devam Et</button>
+        </div>
+
+        <div class="page" id="p6">
+            <h1>Geleceğimiz</h1>
+            <p>Artık ne istediğimi biliyorum. Senin elini tutmak ve seni mutlu etmek.</p>
+            <button class="btn" onclick="nextPage('p6', 'p7')">Sorum...</button>
+        </div>
 
         <div class="page" id="p7">
             <h1>Her Şeye Var mısın?</h1>
-            <p>Sonsuza dek benimle sevgilim olarak devam etmeye var mısın?</p>
+            <p>Yeniden ve sonsuza dek benimle <b>sevgilim</b> olmaya var mısın?</p>
             <div class="choice-btns">
                 <button class="btn" id="yesBtn" onclick="celebrate()">EVET ❤️</button>
                 <button class="btn" id="noBtn" onmouseover="moveButton()">HAYIR</button>
@@ -127,7 +150,7 @@
 
         <div class="page" id="p8">
             <h1>Dünyalar Benim Oldu!</h1>
-            <p>Seni asla bırakmayacağım! <span class="heart">❤️</span></p>
+            <p>Seni asla hayal kırıklığına uğratmayacağım sevgilim! <span class="heart">❤️</span></p>
         </div>
     </div>
 
@@ -152,7 +175,7 @@
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // Eğer butona ilk kez dokunuluyorsa, hemen fixed yapıp yerini koruyalım
+            // İlk temasta butonun boyutlarını kilitle ve fixed yap (uçmasını engeller)
             if (noBtn.style.position !== 'fixed') {
                 const rect = noBtn.getBoundingClientRect();
                 noBtn.style.width = rect.width + 'px';
@@ -163,22 +186,19 @@
                 noBtn.style.margin = '0';
             }
 
-            // Ekran sınırlarını al (Güvenli bölge: kenarlardan 50px)
             const padding = 50;
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-            // Rastgele yeni yer (Asla maxX veya maxY dışına çıkmaz)
-            const newX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const newY = Math.max(padding, Math.floor(Math.random() * maxY));
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
 
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         }
 
         function celebrate() {
-            const noBtn = document.getElementById('noBtn');
-            if (noBtn) noBtn.style.display = 'none';
+            document.getElementById('noBtn').style.display = 'none';
             nextPage('p7', 'p8');
         }
     </script>
