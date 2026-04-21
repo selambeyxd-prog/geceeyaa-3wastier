@@ -84,7 +84,7 @@
 
         .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 
-        .choice-btns { display: flex; justify-content: center; gap: 20px; margin-top: 25px; }
+        .choice-btns { display: flex; justify-content: center; gap: 20px; margin-top: 25px; min-height: 60px; }
         
         #noBtn { 
             z-index: 1000;
@@ -105,43 +105,43 @@
     <div class="container">
         <div class="page active" id="p1">
             <h1>Sadece Senin İçin...</h1>
-            <p>Hayat bazen sessiz bir melodi gibidir, ta ki o melodiyi güzelleştiren asıl nota gelene kadar.</p>
-            <button class="btn" onclick="startApp()">Başla ❤️</button>
+            <p>Hayat bazen sessiz bir melodi gibidir, ta ki o melodiyi güzelleştiren asıl nota gelene kadar. Benim için o nota sensin.</p>
+            <button class="btn" onclick="startApp()">Küçük Bir Yolculuk? <span class="heart">❤️</span></button>
         </div>
 
         <div class="page" id="p2">
-            <h1>Güneşin Doğuşu</h1>
-            <p>Senin varlığın, tüm karanlıkları unutturacak kadar güçlü.</p>
+            <h1>Işığınla Tanıştığım Gün</h1>
+            <p>Senin varlığın, dünyadaki tüm karanlıkları unutturacak kadar güçlü. Güldüğünde zamanın durduğunu hissetmek benim en büyük şansım.</p>
             <button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button>
         </div>
 
         <div class="page" id="p3">
-            <h1>Ruhun Eşsizliği</h1>
-            <p>Sadece yüzün değil, kalbin ve ruhun da o kadar eşsiz ki...</p>
-            <button class="btn" onclick="nextPage('p3', 'p4')">Devam Et</button>
+            <h1>Güzelliğin Hakkında</h1>
+            <p>Sadece yüzün değil, kalbin ve ruhun da o kadar eşsiz ki... Hayatına dokunan herkesin dünyasını güzelleştiriyorsun, en başta da benimkini.</p>
+            <button class="btn" onclick="nextPage('p3', 'p4')">Ve Bugün...</button>
         </div>
 
         <div class="page" id="p4">
             <h1>İyi ki Doğdun!</h1>
-            <p>Dilerim bu yeni yaşın sana kalbinin dilediği her şeyi getirir.</p>
-            <button class="btn" onclick="nextPage('p4', 'p5')">Devam Et</button>
+            <p>Bugün senin günün. Dilerim bu yeni yaşın sana kalbinin tüm saflığıyla dilediği her şeyi getirir. İyi ki doğmuşsun ve iyi ki yollarımız kesişmiş.</p>
+            <button class="btn" onclick="nextPage('p4', 'p5')">Biraz Da Bizden Konuşalım mı?</button>
         </div>
 
         <div class="page" id="p5">
-            <h1>Özür Dilerim</h1>
-            <p>Seni kırdım, biliyorum. Sensiz geçen her an değerini bana tekrar öğretti.</p>
-            <button class="btn" onclick="nextPage('p5', 'p6')">Devam Et</button>
+            <h1>Yeniden Başlamak</h1>
+            <p>Biliyorum, her zaman o gülüşü hak eden biri olamadım. Hatalarım oldu, seni kırdım. Ama sensiz geçen her an, senin değerini kalbime kazıdı. Özür dilerim...</p>
+            <button class="btn" onclick="nextPage('p5', 'p6')">Sonraki Adım...</button>
         </div>
 
         <div class="page" id="p6">
-            <h1>Geleceğimiz</h1>
-            <p>Artık ne istediğimi biliyorum. Senin elini tutmak ve seni mutlu etmek.</p>
-            <button class="btn" onclick="nextPage('p6', 'p7')">Sorum...</button>
+            <h1>Geleceğe Dair</h1>
+            <p>Artık ne istediğimi çok daha iyi biliyorum. Senin elini tutmak, seninle büyümek ve her gününü bir öncekinden daha mutlu etmek tek amacım.</p>
+            <button class="btn" onclick="nextPage('p6', 'p7')">Sana Bir Sorum Var...</button>
         </div>
 
         <div class="page" id="p7">
             <h1>Her Şeye Var mısın?</h1>
-            <p>Yeniden ve sonsuza dek benimle <b>sevgilim</b> olmaya var mısın?</p>
+            <p>Geçmişi burada bırakıp, bu güzel günde her şeye yeniden ve sonsuza dek benimle <b>sevgilim</b> olarak devam etmeye var mısın?</p>
             <div class="choice-btns">
                 <button class="btn" id="yesBtn" onclick="celebrate()">EVET ❤️</button>
                 <button class="btn" id="noBtn" onmouseover="moveButton()">HAYIR</button>
@@ -150,7 +150,7 @@
 
         <div class="page" id="p8">
             <h1>Dünyalar Benim Oldu!</h1>
-            <p>Seni asla hayal kırıklığına uğratmayacağım sevgilim! <span class="heart">❤️</span></p>
+            <p>Seni asla hayal kırıklığına uğratmayacağım. İyi ki varsın, iyi ki benimlesin sevgilim! <span class="heart">❤️</span></p>
         </div>
     </div>
 
@@ -175,7 +175,6 @@
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // İlk temasta butonun boyutlarını kilitle ve fixed yap (uçmasını engeller)
             if (noBtn.style.position !== 'fixed') {
                 const rect = noBtn.getBoundingClientRect();
                 noBtn.style.width = rect.width + 'px';
@@ -198,7 +197,8 @@
         }
 
         function celebrate() {
-            document.getElementById('noBtn').style.display = 'none';
+            const noBtn = document.getElementById('noBtn');
+            if (noBtn) noBtn.style.display = 'none';
             nextPage('p7', 'p8');
         }
     </script>
