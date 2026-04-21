@@ -1,221 +1,396 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sadece Senin İçin...</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sadece Senin İçin...</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: #ffffff;
-            overflow: hidden;
-            background: radial-gradient(circle at center, #0f0f0f 0%, #000000 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0f0f0f 0%, #000000 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(70, 70, 70, 0.2), transparent 70%);
-            z-index: -1;
-            animation: moveGlow 10s infinite alternate;
-        }
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(70, 70, 70, 0.2), transparent 70%);
+            z-index: -1;
+            animation: moveGlow 10s infinite alternate;
+        }
 
-        @keyframes moveGlow {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.3); opacity: 1; }
-        }
+        @keyframes moveGlow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
 
-        .container { width: 90%; max-width: 550px; position: relative; }
+        .container { width: 90%; max-width: 550px; position: relative; z-index: 10; }
 
-        .page {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 55px 45px;
-            border-radius: 40px;
-            text-align: center;
-            display: none;
-            opacity: 0;
-            box-shadow: 0 50px 150px rgba(0, 0, 0, 1);
-        }
+        .page {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 55px 45px;
+            border-radius: 40px;
+            text-align: center;
+            display: none;
+            opacity: 0;
+            box-shadow: 0 50px 150px rgba(0, 0, 0, 1);
+        }
 
-        .page.active { 
-            display: block; 
-            animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
+        .page.active { 
+            display: block; 
+            animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.3rem;
-            margin-bottom: 25px;
-            background: linear-gradient(to right, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInText 1.5s ease forwards;
-        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInText 1.5s ease forwards;
+        }
 
-        p { 
-            font-size: 1.1rem; 
-            line-height: 1.9; 
-            margin-bottom: 35px; 
-            color: #d0d0d0; 
-            font-weight: 300; 
-            animation: fadeInText 2s ease forwards;
-        }
+        p { 
+            font-size: 1.1rem; 
+            line-height: 1.9; 
+            margin-bottom: 35px; 
+            color: #d0d0d0; 
+            font-weight: 300; 
+            animation: fadeInText 2s ease forwards;
+        }
 
-        @keyframes fadeInText {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-        .btn {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 16px 40px;
-            font-size: 0.9rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
+        .btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 16px 40px;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
 
-        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 
-        .choice-btns { 
-            display: flex; 
-            justify-content: center; 
-            gap: 20px; 
-            margin-top: 25px;
-            min-height: 60px; /* Buton kaçınca sayfa kaymasın */
-        }
-        
-        #noBtn { 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            z-index: 1000;
-        }
+        .choice-btns { 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            margin-top: 25px;
+            min-height: 60px; /* Buton kaçınca sayfa kaymasın */
+        }
+        
+        #noBtn { 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            z-index: 1000;
+        }
 
-        #yesBtn { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+        #yesBtn { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
 
-        .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
-    </style>
+        .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+
+
+        /* --- YENİ EKLENECEK PARTİ PATLATICI (POPPER) STİLLERİ --- */
+
+        .popper-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 8rem; /* Çok büyük istendiği için */
+            opacity: 0; /* Başlangıçta görünmez */
+            z-index: 5; /* Kutunun arkasında kalması için container z-index'inden daha düşük */
+            pointer-events: none; /* Tıklamayı engelle, arkadaki butonlar çalışsın */
+            display: none; /* Sadece p4 sayfasında aktif olacak */
+        }
+
+        .popper-left {
+            left: 5%; /* Konum */
+        }
+
+        .popper-right {
+            right: 5%; /* Konum */
+            transform: translateY(-50%) scaleX(-1); /* Sağdakini aynala */
+        }
+
+        /* 1. AŞAMA: Yavaşça Belirme Animasyonu */
+        @keyframes fadeInPopper {
+            0% { opacity: 0; transform: translateY(-50%) scale(0.5); }
+            100% { opacity: 1; transform: translateY(-50%) scale(1); }
+        }
+
+        /* Sağdaki için aynalanmış belirme */
+        @keyframes fadeInPopperRight {
+            0% { opacity: 0; transform: translateY(-50%) scaleX(-1) scale(0.5); }
+            100% { opacity: 1; transform: translateY(-50%) scaleX(-1) scale(1); }
+        }
+
+        /* 2. AŞAMA: Patlama Efekti (Hafif bir sarsıntı) */
+        @keyframes popShake {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.1) rotate(5deg); }
+        }
+
+        /* Sağdaki için aynalanmış patlama sarsıntısı */
+        @keyframes popShakeRight {
+            0%, 100% { transform: translateY(-50%) scaleX(-1) scale(1); }
+            50% { transform: translateY(-50%) scaleX(-1) scale(1.1) rotate(-5deg); }
+        }
+
+
+        /* JS ile eklenecek sınıflar */
+        .popper-visible {
+            display: block;
+            animation: fadeInPopper 1.5s ease-out forwards; /* Yavaşça yüklenir */
+        }
+        .popper-right.popper-visible {
+            animation: fadeInPopperRight 1.5s ease-out forwards;
+        }
+
+        .popper-exploded {
+            animation: popShake 0.3s ease-in-out; /* Patlama sarsıntısı */
+        }
+        .popper-right.popper-exploded {
+            animation: popShakeRight 0.3s ease-in-out;
+        }
+
+
+        /* --- YENİ EKLENECEK KONFETİ PARTİKÜL STİLLERİ --- */
+        .confetti {
+            position: fixed; /* Ekranın her yerinde uçuşabilsinler */
+            width: 10px;
+            height: 10px;
+            background-color: #f00; /* JS ile değişecek */
+            opacity: 0;
+            z-index: 1; /* Mesaj kutusunun arkasında kalması için en düşük */
+        }
+
+        /* Konfeti düşme animasyonu */
+        @keyframes confettiFall {
+            0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--dr)); }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-    <audio id="music" loop><source src="senin_muzigin.mp3" type="audio/mpeg"></audio>
+    <div class="bg-glow"></div>
+    <audio id="music" loop><source src="senin_muzigin.mp3" type="audio/mpeg"></audio>
 
-    <div class="container">
-        <div class="page active" id="p1">
-            <h1>Sadece Senin İçin...</h1>
-            <p>Hayat bazen sessiz bir melodi gibidir, ta ki o melodiyi güzelleştiren asıl nota gelene kadar. Benim için o nota sensin.</p>
-            <button class="btn" onclick="startApp()">Küçük Bir Yolculuk? <span class="heart">❤️</span></button>
-        </div>
+        <div class="popper-container popper-left" id="popperLeft">🎉</div>
 
-        <div class="page" id="p2">
-            <h1>Işığınla Tanıştığım Gün</h1>
-            <p>Senin varlığın, dünyadaki tüm karanlıkları unutturacak kadar güçlü. Güldüğünde zamanın durduğunu hissetmek benim en büyük şansım.</p>
-            <button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button>
-        </div>
+    <div class="container">
+        <div class="page active" id="p1">
+            <h1>Sadece Senin İçin...</h1>
+            <p>Hayat bazen sessiz bir melodi gibidir, ta ki o melodiyi güzelleştiren asıl nota gelene kadar. Benim için o nota sensin.</p>
+            <button class="btn" onclick="startApp()">Küçük Bir Yolculuk? <span class="heart">❤️</span></button>
+        </div>
 
-        <div class="page" id="p3">
-            <h1>Güzelliğin Hakkında</h1>
-            <p>Sadece yüzün değil, kalbin ve ruhun da o kadar eşsiz ki... Hayatına dokunan herkesin dünyasını güzelleştiriyorsun, en başta da benimkini.</p>
-            <button class="btn" onclick="nextPage('p3', 'p4')">Ve Bugün...</button>
-        </div>
+        <div class="page" id="p2">
+            <h1>Işığınla Tanıştığım Gün</h1>
+            <p>Senin varlığın, dünyadaki tüm karanlıkları unutturacak kadar güçlü. Güldüğünde zamanın durduğunu hissetmek benim en büyük şansım.</p>
+            <button class="btn" onclick="nextPage('p2', 'p3')">Devam Et</button>
+        </div>
 
-        <div class="page" id="p4">
-            <h1>İyi ki Doğdun!</h1>
-            <p>Bugün senin günün. Dilerim bu yeni yaşın sana kalbinin tüm saflığıyla dilediği her şeyi getirir. İyi ki doğmuşsun ve iyi ki yollarımız kesişmiş.</p>
-            <button class="btn" onclick="nextPage('p4', 'p5')">Biraz Da Bizden Konuşalım mı?</button>
-        </div>
+        <div class="page" id="p3">
+            <h1>Güzelliğin Hakkında</h1>
+            <p>Sadece yüzün değil, kalbin ve ruhun da o kadar eşsiz ki... Hayatına dokunan herkesin dünyasını güzelleştiriyorsun, en başta da benimkini.</p>
+            <button class="btn" onclick="nextPage('p3', 'p4')">Ve Bugün...</button>
+        </div>
 
-        <div class="page" id="p5">
-            <h1>Yeniden Başlamak</h1>
-            <p>Biliyorum, her zaman o gülüşü hak eden biri olamadım. Hatalarım oldu, seni kırdım. Ama sensiz geçen her an, senin değerini kalbime kazıdı. Özür dilerim...</p>
-            <button class="btn" onclick="nextPage('p5', 'p6')">Sonraki Adım...</button>
-        </div>
+        <div class="page" id="p4">
+            <h1>İyi ki Doğdun!</h1>
+            <p>Bugün senin günün. Dilerim bu yeni yaşın sana kalbinin tüm saflığıyla dilediği her şeyi getirir. İyi ki doğmuşsun ve iyi ki yollarımız kesişmiş.</p>
+            <button class="btn" onclick="nextPage('p4', 'p5')">Biraz Da Bizden Konuşalım mı?</button>
+        </div>
 
-        <div class="page" id="p6">
-            <h1>Geleceğe Dair</h1>
-            <p>Artık ne istediğimi çok daha iyi biliyorum. Senin elini tutmak, seninle büyümek ve her gününü bir öncekinden daha mutlu etmek tek amacım.</p>
-            <button class="btn" onclick="nextPage('p6', 'p7')">Sana Bir Sorum Var...</button>
-        </div>
+        <div class="page" id="p5">
+            <h1>Yeniden Başlamak</h1>
+            <p>Biliyorum, her zaman o gülüşü hak eden biri olamadım. Hatalarım oldu, seni kırdım. Ama sensiz geçen her an, senin değerini kalbime kazıdı. Özür dilerim...</p>
+            <button class="btn" onclick="nextPage('p5', 'p6')">Sonraki Adım...</button>
+        </div>
 
-        <div class="page" id="p7">
-            <h1>Her Şeye Var mısın?</h1>
-            <p>Geçmişi burada bırakıp, bu güzel günde her şeye yeniden ve sonsuza dek benimle <b>sevgilim</b> olarak devam etmeye var mısın?</p>
-            <div class="choice-btns">
-                <button class="btn" id="yesBtn" onclick="celebrate()">EVET ❤️</button>
-                <button class="btn" id="noBtn" onmouseover="moveButton()">HAYIR</button>
-            </div>
-        </div>
+        <div class="page" id="p6">
+            <h1>Geleceğe Dair</h1>
+            <p>Artık ne istediğimi çok daha iyi biliyorum. Senin elini tutmak, seninle büyümek ve her gününü bir öncekinden daha mutlu etmek tek amacım.</p>
+            <button class="btn" onclick="nextPage('p6', 'p7')">Sana Bir Sorum Var...</button>
+        </div>
 
-        <div class="page" id="p8">
-            <h1>Dünyalar Benim Oldu!</h1>
-            <p>Seni asla hayal kırıklığına uğratmayacağım. İyi ki varsın, iyi ki benimlesin sevgilim! <span class="heart">❤️</span></p>
-        </div>
-    </div>
+        <div class="page" id="p7">
+            <h1>Her Şeye Var mısın?</h1>
+            <p>Geçmişi burada bırakıp, bu güzel günde her şeye yeniden ve sonsuza dek benimle <b>sevgilim</b> olarak devam etmeye var mısın?</p>
+            <div class="choice-btns">
+                <button class="btn" id="yesBtn" onclick="celebrate()">EVET ❤️</button>
+                <button class="btn" id="noBtn" onmouseover="moveButton()">HAYIR</button>
+            </div>
+        </div>
 
-    <script>
-        const music = document.getElementById('music');
+        <div class="page" id="p8">
+            <h1>Dünyalar Benim Oldu!</h1>
+            <p>Seni asla hayal kırıklığına uğratmayacağım. İyi ki varsın, iyi ki benimlesin sevgilim! <span class="heart">❤️</span></p>
+        </div>
+    </div>
 
-        function startApp() {
-            music.play().catch(() => {});
-            nextPage('p1', 'p2');
-        }
+        <div class="popper-container popper-right" id="popperRight">🎉</div>
 
-        function nextPage(current, next) {
-            const currentPg = document.getElementById(current);
-            const nextPg = document.getElementById(next);
-            currentPg.style.opacity = '0';
-            setTimeout(() => {
-                currentPg.classList.remove('active');
-                nextPg.classList.add('active');
-                window.scrollTo(0,0);
-            }, 400);
-        }
+    <script>
+        const music = document.getElementById('music');
+        const popperLeft = document.getElementById('popperLeft');
+        const popperRight = document.getElementById('popperRight');
 
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
-            
-            // İlk temasta fixed yap ki özgürce kaçabilsin
-            if (noBtn.style.position !== 'fixed') {
-                noBtn.style.position = 'fixed';
-            }
+        function startApp() {
+            music.play().catch(() => {});
+            nextPage('p1', 'p2');
+        }
 
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+        function nextPage(current, next) {
+            const currentPg = document.getElementById(current);
+            const nextPg = document.getElementById(next);
+            currentPg.style.opacity = '0';
+            setTimeout(() => {
+                currentPg.classList.remove('active');
+                nextPg.classList.add('active');
+                window.scrollTo(0,0);
 
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+                // --- YENİ EKLENEN ANİMASYON MANTIĞI ---
+                // Eğer yeni sayfa 'p4' (İyi ki Doğdun) ise patlamayı başlat
+                if (next === 'p4') {
+                    startPopperAnimation();
+                } else {
+                    // Başka bir sayfaya geçilirse simgeleri sakla
+                    popperLeft.classList.remove('popper-visible', 'popper-exploded');
+                    popperRight.classList.remove('popper-visible', 'popper-exploded');
+                }
 
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
+            }, 400);
+        }
 
-        function celebrate() {
-            document.getElementById('noBtn').style.display = 'none';
-            nextPage('p7', 'p8');
-        }
-    </script>
+        function startPopperAnimation() {
+            // 1. AŞAMA: Sayfa geçişi bittikten hemen sonra simgeleri yavaşça göster
+            setTimeout(() => {
+                popperLeft.classList.add('popper-visible');
+                popperRight.classList.add('popper-visible');
+            }, 100); 
+
+            // 2. AŞAMA: Simgeler tamamen belirdikten (1.5s fade + 0.2s bekleme = ~1.7s) sonra patlat
+            setTimeout(() => {
+                popperLeft.classList.add('popper-exploded');
+                popperRight.classList.add('popper-exploded');
+                
+                // Konfetileri yarat (Her iki taraf için)
+                createConfetti(popperLeft, 'left');
+                createConfetti(popperRight, 'right');
+
+                // Patlamadan sonra patlatıcı simgelerini yavaşça kaldırabiliriz (isteğe bağlı)
+                setTimeout(() => { popperLeft.style.opacity = '0'; popperRight.style.opacity = '0'; }, 1000);
+                // Tamamen silmek için:
+                // setTimeout(() => { popperLeft.style.display = 'none'; popperRight.style.display = 'none'; }, 2000);
+            }, 2000); // Sayfa geldikten toplam 2 saniye sonra patlama gerçekleşir
+        }
+
+
+        // --- YENİ EKLENEN KONFETİ YARATMA FONKSİYONU ---
+        function createConfetti(popperElement, side) {
+            const confettiCount = 50; // Kaç tane konfeti parçacığı olsun?
+            const colors = ['#ffcc00', '#ff3366', '#33ccff', '#66ff66', '#ff9933']; // Canlı renkler
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Rastgele renk, boyut ve şekil (daire/kare)
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 8 + 4 + 'px'; // 4px ile 12px arası
+                confetti.style.width = size;
+                confetti.style.height = size;
+                if (Math.random() > 0.5) confetti.style.borderRadius = '50%'; // Yarı yarıya daire
+
+                // Başlangıç pozisyonu (patlatıcının tam merkezi)
+                const rect = popperElement.getBoundingClientRect();
+                confetti.style.left = (rect.left + rect.width / 2) + 'px';
+                confetti.style.top = (rect.top + rect.height / 2) + 'px';
+
+                // Rastgele fırlama yönü ve mesafesi
+                let dx, dy;
+                if (side === 'left') {
+                    // Soldan sağa ve yukarı/aşağı doğru saçıl
+                    dx = (Math.random() * 300 + 150) + 'px'; // Sağa fırlama
+                    dy = (Math.random() * 400 - 200) + 'px'; // Yukarı-aşağı saçılma
+                } else {
+                    // Sağdan sola ve yukarı/aşağı doğru saçıl
+                    dx = (Math.random() * -300 - 150) + 'px'; // Sola fırlama
+                    dy = (Math.random() * 400 - 200) + 'px';
+                }
+                const dr = (Math.random() * 720 - 360) + 'deg'; // Rastgele dönme
+
+                // CSS değişkenlerini ata
+                confetti.style.setProperty('--dx', dx);
+                confetti.style.setProperty('--dy', dy);
+                confetti.style.setProperty('--dr', dr);
+
+                // Animasyonu başlat (rastgele gecikme ve süre ile daha doğal görünür)
+                const duration = Math.random() * 1 + 1 + 's'; // 1s - 2s arası düşme süresi
+                confetti.style.animation = `confettiFall ${duration} ease-out forwards`;
+
+                document.body.appendChild(confetti);
+
+                // Bellek temizliği: Animasyon bittikten sonra konfeti elementini kaldır
+                setTimeout(() => {
+                    confetti.remove();
+                }, parseFloat(duration) * 1000);
+            }
+        }
+
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            
+            // İlk temasta fixed yap ki özgürce kaçabilsin
+            if (noBtn.style.position !== 'fixed') {
+                noBtn.style.position = 'fixed';
+            }
+
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function celebrate() {
+            document.getElementById('noBtn').style.display = 'none';
+            nextPage('p7', 'p8');
+        }
+    </script>
 </body>
 </html>
