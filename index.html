@@ -111,7 +111,6 @@
         .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
 
-        /* --- 🎉 BEYAZ KALP YAĞMURU STİLLERİ (DÜZELTİLDİ) --- */
         .white-heart-rain {
             position: fixed;
             font-size: 1rem;
@@ -119,8 +118,8 @@
             user-select: none;
             z-index: 5;
             pointer-events: none;
-            opacity: 0; /* Başlangıçta gizli */
-            top: 100vh; /* Ekranın altında başlasın */
+            opacity: 0;
+            top: 100vh;
         }
 
         @keyframes floatUp {
@@ -130,11 +129,18 @@
             100% { transform: translateY(-110vh) rotate(calc(var(--rot) * 1deg)); opacity: 0; }
         }
 
-        /* Diğer Konfeti Efektleri */
-        .confetti { position: fixed; z-index: 15; pointer-events: none; }
-        @keyframes confettiFall {
-            0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
-            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--dr)); }
+        /* 🎉 Emoji Patlama Efekti */
+        .emoji-particle {
+            position: fixed;
+            z-index: 100;
+            pointer-events: none;
+            font-size: 2rem;
+            animation: emojiExplode 1.5s ease-out forwards;
+        }
+
+        @keyframes emojiExplode {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -211,7 +217,36 @@
                 currentPg.classList.remove('active');
                 nextPg.classList.add('active');
                 window.scrollTo(0,0);
+                
+                // Eğer açılan sayfa p4 (İyi ki Doğdun) ise 🎉 patlat
+                if (next === 'p4') {
+                    triggerConfetti();
+                }
             }, 400);
+        }
+
+        function triggerConfetti() {
+            for(let i=0; i<16; i++) {
+                createParticle(0, 50); // Sol kenar
+                createParticle(window.innerWidth, 50); // Sağ kenar
+            }
+        }
+
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'emoji-particle';
+            particle.innerHTML = '🎉';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'vh';
+            
+            const tx = (Math.random() - 0.5) * 400 + (x === 0 ? 200 : -200);
+            const ty = (Math.random() - 0.5) * 400;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1500);
         }
 
         function moveButton() {
@@ -235,33 +270,19 @@
         function startWhiteHeartRain() {
             const container = document.body;
             const heartCount = 100;
-
             for (let i = 0; i < heartCount; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('white-heart-rain');
                 heart.innerHTML = '🤍';
-
                 const size = Math.random() * 0.8 + 0.5 + 'rem';
                 heart.style.fontSize = size;
-
-                // Sağ ve sol kenarlara yerleştirme
-                let xPos;
-                if (Math.random() < 0.5) {
-                    xPos = Math.random() * 25 + '%'; 
-                } else {
-                    xPos = Math.random() * 25 + 75 + '%'; 
-                }
+                let xPos = Math.random() < 0.5 ? Math.random() * 25 + '%' : Math.random() * 25 + 75 + '%';
                 heart.style.left = xPos;
-
                 const duration = Math.random() * 3 + 4 + 's';
                 const delay = Math.random() * 5 + 's';
-                
-                // Animasyon tetikleme
                 heart.style.animation = `floatUp ${duration} linear ${delay} infinite`;
-
                 const rot = Math.random() * 360;
                 heart.style.setProperty('--rot', rot);
-
                 container.appendChild(heart);
             }
         }
