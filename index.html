@@ -13,7 +13,11 @@
             font-family: 'Poppins', sans-serif;
             color: #ffffff;
             overflow: hidden;
-            background: radial-gradient(circle at center, #0f0f0f 0%, #000000 100%);
+            /* Arka plan görseli burada ayarlandı */
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('gorsel-adi.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,29 +27,29 @@
         .bg-glow {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(70, 70, 70, 0.2), transparent 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.4), transparent 70%);
             z-index: -1;
             animation: moveGlow 10s infinite alternate;
         }
 
         @keyframes moveGlow {
             0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(1.3); opacity: 0.8; }
         }
 
         .container { width: 90%; max-width: 550px; position: relative; }
 
         .page {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.4); /* Biraz daha koyulaştırıldı */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 55px 45px;
             border-radius: 40px;
             text-align: center;
             display: none;
             opacity: 0;
-            box-shadow: 0 50px 150px rgba(0, 0, 0, 1);
+            box-shadow: 0 50px 150px rgba(0, 0, 0, 0.8);
         }
 
         .page.active { 
@@ -62,30 +66,23 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.3rem;
             margin-bottom: 25px;
-            background: linear-gradient(to right, #fff, #888);
+            background: linear-gradient(to right, #fff, #bbb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: fadeInText 1.5s ease forwards;
         }
 
         p { 
             font-size: 1.1rem; 
             line-height: 1.9; 
             margin-bottom: 35px; 
-            color: #d0d0d0; 
+            color: #e0e0e0; 
             font-weight: 300; 
-            animation: fadeInText 2s ease forwards;
-        }
-
-        @keyframes fadeInText {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .btn {
             background: transparent;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             padding: 16px 40px;
             font-size: 0.9rem;
             border-radius: 50px;
@@ -93,7 +90,6 @@
             transition: all 0.4s;
             letter-spacing: 2px;
             text-transform: uppercase;
-            white-space: nowrap;
         }
 
         .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
@@ -116,7 +112,6 @@
         .heart { color: #ff4d4d; animation: pulse 1.5s infinite; display: inline-block; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
 
-        /* --- 🎉 YENİ EKLENEN PARTİ EFEKTİ STİLLERİ --- */
         .popper-container {
             position: fixed;
             top: 50%;
@@ -230,25 +225,17 @@
                 currentPg.classList.remove('active');
                 nextPg.classList.add('active');
                 window.scrollTo(0,0);
-
-                // EĞER SONRAKİ SAYFA p4 İSE (DOĞUM GÜNÜ SAYFASI)
-                if (next === 'p4') {
-                    startPopperEffect();
-                }
+                if (next === 'p4') { startPopperEffect(); }
             }, 400);
         }
 
         function startPopperEffect() {
             const pLeft = document.getElementById('popperLeft');
             const pRight = document.getElementById('popperRight');
-
-            // Yarım saniye sonra yavaşça belirmeye başla
             setTimeout(() => {
                 pLeft.classList.add('popper-visible');
                 pRight.classList.add('popper-visible');
             }, 500);
-
-            // Belirdikten sonra (1.5s fade + bekleme) patlat
             setTimeout(() => {
                 pLeft.classList.add('popper-exploded');
                 pRight.classList.add('popper-exploded');
@@ -266,23 +253,17 @@
                 const size = Math.random() * 8 + 4 + 'px';
                 confetti.style.width = size;
                 confetti.style.height = size;
-                if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
-
                 const rect = popperElement.getBoundingClientRect();
                 confetti.style.left = (rect.left + rect.width / 2) + 'px';
                 confetti.style.top = (rect.top + rect.height / 2) + 'px';
-
                 let dx = (side === 'left' ? (Math.random() * 300 + 100) : (Math.random() * -300 - 100)) + 'px';
                 let dy = (Math.random() * 400 - 200) + 'px';
                 let dr = (Math.random() * 720 - 360) + 'deg';
-
                 confetti.style.setProperty('--dx', dx);
                 confetti.style.setProperty('--dy', dy);
                 confetti.style.setProperty('--dr', dr);
-
                 const duration = Math.random() * 1 + 1 + 's';
                 confetti.style.animation = `confettiFall ${duration} ease-out forwards`;
-
                 document.body.appendChild(confetti);
                 setTimeout(() => confetti.remove(), 2000);
             }
@@ -290,9 +271,7 @@
 
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            if (noBtn.style.position !== 'fixed') {
-                noBtn.style.position = 'fixed';
-            }
+            if (noBtn.style.position !== 'fixed') { noBtn.style.position = 'fixed'; }
             const padding = 50;
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
