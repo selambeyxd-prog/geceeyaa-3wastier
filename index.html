@@ -13,7 +13,6 @@
             font-family: 'Poppins', sans-serif;
             color: #ffffff;
             overflow: hidden;
-            /* Arka plan görseli burada ayarlandı */
             background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('gorsel-adi.png');
             background-size: cover;
             background-position: center;
@@ -40,7 +39,7 @@
         .container { width: 90%; max-width: 550px; position: relative; }
 
         .page {
-            background: rgba(0, 0, 0, 0.4); /* Biraz daha koyulaştırıldı */
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -146,6 +145,23 @@
         @keyframes confettiFall {
             0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
             100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--dr)); }
+        }
+
+        /* --- 🎉 YENİ EKLENEN BEYAZ KALP YAĞMURU STİLLERİ --- */
+        .white-heart-rain {
+            position: fixed;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            user-select: none;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(calc(var(--rot) * 1deg)); opacity: 0; }
         }
     </style>
 </head>
@@ -284,6 +300,47 @@
         function celebrate() {
             document.getElementById('noBtn').style.display = 'none';
             nextPage('p7', 'p8');
+            startWhiteHeartRain(); // 🎉 Kalp yağmurunu başlat
+        }
+
+        /* --- 🎉 YENİ EKLENEN BEYAZ KALP YAĞMURU FONKSİYONU --- */
+        function startWhiteHeartRain() {
+            const container = document.body;
+            const heartCount = 100; // Toplam kalp sayısı
+
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('white-heart-rain');
+                heart.innerHTML = '🤍'; // Beyaz kalp
+
+                // Rastgele boyut (küçük dolu kalpler)
+                const size = Math.random() * 0.8 + 0.5 + 'rem';
+                heart.style.fontSize = size;
+
+                // Rastgele yatay pozisyon (Sağ ve sol taraftan, ortayı boş bırakarak)
+                let xPos;
+                if (Math.random() < 0.5) {
+                    // Sol taraf
+                    xPos = Math.random() * 20 + '%'; // 0% - 20% arası
+                } else {
+                    // Sağ taraf
+                    xPos = Math.random() * 20 + 80 + '%'; // 80% - 100% arası
+                }
+                heart.style.left = xPos;
+
+                // Rastgele animasyon süresi ve gecikme
+                const duration = Math.random() * 3 + 4 + 's'; // 4s - 7s arası
+                const delay = Math.random() * 5 + 's'; // 0s - 5s gecikme
+                heart.style.animation = `floatUp ${duration} linear ${delay} infinite`;
+
+                // Rastgele dönüş açısı (CSS değişkeni)
+                const rot = Math.random() * 360;
+                heart.style.setProperty('--rot', rot);
+
+                container.appendChild(heart);
+
+                // Ekrandan çıktıktan sonra temizle (Ama loop olduğu için gerek yok, infinite yaptık)
+            }
         }
     </script>
 </body>
